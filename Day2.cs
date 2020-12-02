@@ -11,8 +11,8 @@ namespace AdventofCode2020
     {
         private static Regex LineRegex = new Regex(@"(\d*)-(\d*) ([a-z]): ([a-z]*)");
 
-        public int PolicyMinCount { get; set; }
-        public int PolicyMaxCount { get; set; }
+        public int PolicyIndex1 { get; set; }
+        public int PolicyIndex2 { get; set; }
         public char PolicyLetter { get; set; }
 
         public String Password { get; set; }
@@ -20,8 +20,8 @@ namespace AdventofCode2020
         public Day2Data(String line)
         {
             Match match = LineRegex.Match(line);
-            PolicyMinCount = int.Parse(match.Groups[1].Value);
-            PolicyMaxCount = int.Parse(match.Groups[2].Value);
+            PolicyIndex1 = int.Parse(match.Groups[1].Value) - 1;
+            PolicyIndex2 = int.Parse(match.Groups[2].Value) - 1;
             PolicyLetter = match.Groups[3].Value[0];
             Password = match.Groups[4].Value;
         }
@@ -35,9 +35,11 @@ namespace AdventofCode2020
 
             foreach (Day2Data data in input)
             {
-                int count = data.Password.Count(c => c == data.PolicyLetter);
-                if (count >= data.PolicyMinCount &&
-                    count <= data.PolicyMaxCount)
+                char char1 = data.Password[data.PolicyIndex1];
+                char char2 = data.Password[data.PolicyIndex2];
+
+                if ((char1 == data.PolicyLetter && char2 != data.PolicyLetter) ||
+                    (char1 != data.PolicyLetter && char2 == data.PolicyLetter))
                 {
                     result++;
                 }
