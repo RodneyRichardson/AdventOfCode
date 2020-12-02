@@ -9,7 +9,7 @@ namespace AdventofCode2020
 {
     public class Day2Data
     {
-        private static Regex LineRegex = new Regex(@"(\d*)-(\d*) ([a-z]): ([a-z]*)");
+        private static readonly Regex LineRegex = new Regex(@"(\d*)-(\d*) ([a-z]): ([a-z]*)");
 
         public int PolicyIndex1 { get; set; }
         public int PolicyIndex2 { get; set; }
@@ -20,6 +20,7 @@ namespace AdventofCode2020
         public Day2Data(String line)
         {
             Match match = LineRegex.Match(line);
+
             PolicyIndex1 = int.Parse(match.Groups[1].Value) - 1;
             PolicyIndex2 = int.Parse(match.Groups[2].Value) - 1;
             PolicyLetter = match.Groups[3].Value[0];
