@@ -8,7 +8,7 @@ namespace AdventofCode2020
 {
     public class Day1
     {
-        public async Task<Int64> Process(String[] input)
+        public Int64 Process(String[] input)
         {
             int result = 0;
 
