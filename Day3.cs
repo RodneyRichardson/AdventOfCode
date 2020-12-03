@@ -7,37 +7,49 @@ using System.Threading.Tasks;
 
 namespace AdventofCode2020
 {
-    public class Day3Data
+    public class TreeMap
     {
-        private static readonly Regex LineRegex = new Regex(@"(\d*)-(\d*) ([a-z]): ([a-z]*)");
+        private readonly List<List<bool>> m_Data;
+        private readonly int m_XWidth;
 
-        //public int PolicyIndex1 { get; set; }
-        //public int PolicyIndex2 { get; set; }
-        //public char PolicyLetter { get; set; }
-        //public String Password { get; set; }
-
-        public Day3Data(String line)
+        public TreeMap(String[] input)
         {
-            Match match = LineRegex.Match(line);
+            m_Data = new List<List<bool>>(input.Length);
+            foreach (String line in input)
+            {
+                m_Data.Add(line.Select(c => c == '#').ToList());
+            }
+            m_XWidth = input[0].Length;
+        }
 
-            //PolicyIndex1 = int.Parse(match.Groups[1].Value) - 1;
-            //PolicyIndex2 = int.Parse(match.Groups[2].Value) - 1;
-            //PolicyLetter = match.Groups[3].Value[0];
-            //Password = match.Groups[4].Value;
+        public UInt64 CountTrees(int xStep, int yStep)
+        {
+            UInt64 count = 0;
+
+            for (int x = xStep % m_XWidth, y = yStep; y < m_Data.Count; x = (x + xStep) % m_XWidth, y += yStep)
+            {
+                if (m_Data[y][x])
+                {
+                    count++;
+                }
+            }
+            return count;
         }
     }
 
     public class Day3
     {
-        public Int64 Process(IEnumerable<Day3Data> input)
+        public UInt64 Process(String[] input)
         {
-            int result = 0;
+            UInt64 result = 0;
 
-            foreach (Day3Data data in input)
-            {
-       
-            }
-
+            TreeMap map = new TreeMap(input);
+            result = 
+                map.CountTrees(1, 1) *
+                map.CountTrees(3, 1) *
+                map.CountTrees(5, 1) *
+                map.CountTrees(7, 1) *
+                map.CountTrees(1, 2);
             return result;
         }
     }
