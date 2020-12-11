@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventofCode2020
 {
-    public class Day8
+    public class Day08
     {
 
         public class GameEngine

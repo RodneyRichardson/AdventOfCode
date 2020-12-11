@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventofCode2020
 {
-    public class Day7
+    public class Day07
     {
         public class BagRuleEngine
         {

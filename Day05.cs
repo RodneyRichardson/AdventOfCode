@@ -29,7 +29,7 @@ namespace AdventofCode2020
         }
     }
 
-    public class Day5
+    public class Day05
     {
         public UInt64 Process(String[] input)
         {

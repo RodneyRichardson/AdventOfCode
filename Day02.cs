@@ -28,7 +28,7 @@ namespace AdventofCode2020
         }
     }
 
-    public class Day2
+    public class Day02
     {
         public Int64 Process(IEnumerable<Day2Data> input)
         {

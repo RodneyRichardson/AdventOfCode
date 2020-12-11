@@ -37,7 +37,7 @@ namespace AdventofCode2020
         }
     }
 
-    public class Day3
+    public class Day03
     {
         public UInt64 Process(String[] input)
         {

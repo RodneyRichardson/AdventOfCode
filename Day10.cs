@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventofCode2020
 {
-    public class Day9
+    public class Day10
     {
 
         public Int64 Process(String[] input)

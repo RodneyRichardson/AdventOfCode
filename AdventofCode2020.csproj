@@ -6,31 +6,37 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Inputs\InputDay1.txt">
+    <None Update="Inputs\InputDay01.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Inputs\InputDay9.txt">
+    <None Update="Inputs\InputDay11.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Inputs\InputDay8.txt">
+    <None Update="Inputs\InputDay10.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Inputs\InputDay7.txt">
+    <None Update="Inputs\InputDay09.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Inputs\InputDay6.txt">
+    <None Update="Inputs\InputDay08.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Inputs\InputDay5.txt">
+    <None Update="Inputs\InputDay07.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Inputs\InputDay4.txt">
+    <None Update="Inputs\InputDay06.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Inputs\InputDay3.txt">
+    <None Update="Inputs\InputDay05.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Inputs\InputDay2.txt">
+    <None Update="Inputs\InputDay04.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Inputs\InputDay03.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Inputs\InputDay02.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
