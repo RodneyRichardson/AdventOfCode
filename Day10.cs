@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,103 +10,110 @@ namespace AdventofCode2020
 {
     public class Day10
     {
+        const long MAX_JOLTAGE_DIFF = 3;
 
         public Int64 Process(String[] input)
         {
             Int64 result = -1;
 
             //input = new String[] {
-            //    "35",
-            //    "20",
+            //    "16",
+            //    "10",
             //    "15",
-            //    "25",
-            //    "47",
-            //    "40",
-            //    "62",
-            //    "55",
-            //    "65",
-            //    "95",
-            //    "102",
-            //    "117",
-            //    "150",
-            //    "182",
-            //    "127",
-            //    "219",
-            //    "299",
-            //    "277",
-            //    "309",
-            //    "576",
+            //    "5",
+            //    "1",
+            //    "11",
+            //    "7",
+            //    "19",
+            //    "6",
+            //    "12",
+            //    "4",
             //};
 
-            Int64[] values = input.Select(line => Int64.Parse(line)).ToArray();
+            //input = new String[] {
+            //    "28",
+            //    "33",
+            //    "18",
+            //    "42",
+            //    "31",
+            //    "14",
+            //    "46",
+            //    "20",
+            //    "48",
+            //    "47",
+            //    "24",
+            //    "23",
+            //    "49",
+            //    "45",
+            //    "19",
+            //    "38",
+            //    "39",
+            //    "11",
+            //    "1",
+            //    "32",
+            //    "25",
+            //    "35",
+            //    "8",
+            //    "17",
+            //    "7",
+            //    "9",
+            //    "4",
+            //    "2",
+            //    "34",
+            //    "10",
+            //    "3",
+            //};
 
-            // Test
-            //(int index, Int64 value) = FindFirstMissingSum(values, 5);
-            //result = FindEncryptionWeakness(values, value, index);
+            List<Int64> values = input.Select(line => Int64.Parse(line)).OrderBy(v => v).ToList();
+            // Add zero starting point.
+            values.Insert(0, 0);
+            // Add final adapter
+            values.Add(values.Max() + 3);
 
+            //result = CalculatePart1(values.ToArray());
 
-            // Actual data
-            (int index, Int64 value) = FindFirstMissingSum(values, 25);
-            result = FindEncryptionWeakness(values, value, index);
+            result = CalculatePart2(values.ToArray());
 
             return result;
         }
 
-        private long FindEncryptionWeakness(long[] values, long targetValue, int maxIndex)
+        private static long CalculatePart1(long[] values)
         {
-            for (int i = 0; i < maxIndex; i++)
+            long result;
+            Dictionary<Int64, int> gapCount = new Dictionary<long, int>
             {
-                // Assume must sum at least 2 values.
-                long sum = values[i];
-                for (int j = i+1; j < maxIndex; j++)
-                {
-                    sum += values[j];
-                    if (sum == targetValue)
-                    {
-                        long[] temp = values[i..(j + 1)];
-                        long min = temp.Min();
-                        long max = temp.Max();
-                        return min + max;
-                    }
-                    // Assume all positive integers
-                    if (sum > targetValue)
-                    {
-                        break;
-                    }
-                }
+                { 1, 0 },
+                { 2, 0 },
+                { 3, 0 }
+            };
+
+            for (int i = 0; i < values.Length - 1; i++)
+            {
+                Int64 gap = values[i + 1] - values[i];
+                Debug.Assert(gap >= 1);
+                Debug.Assert(gap <= 3);
+                gapCount[gap]++;
             }
-            return -1;
+
+            result = gapCount[1] * gapCount[3];
+            return result;
         }
 
-        private static (int, long) FindFirstMissingSum(long[] values, int size)
+
+        private static long CalculatePart2(long[] values)
         {
-            for (int i = size; i < values.Length; i++)
+            IEnumerable<long> jolts = values.Reverse();
+            var subtreeCounts = new Dictionary<long, long>();
+            foreach (long jolt in jolts)
             {
-                bool found = false;
-
-                for (int j = i - size; j < i - 1; j++)
+                var possibleNext = jolts.Where(j => j > jolt && j <= jolt + 3);
+                subtreeCounts[jolt] = possibleNext.Select(n => subtreeCounts[n]).Sum();
+                if (subtreeCounts[jolt] == 0)
                 {
-                    for (int k = j + 1; k < i; k++)
-                    {
-                        if (values[j] + values[k] == values[i])
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found)
-                    {
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    return (i, values[i]);
+                    subtreeCounts[jolt] = 1;
                 }
             }
-
-            return (-1, -1);
+            return subtreeCounts[0];
         }
     }
 }
