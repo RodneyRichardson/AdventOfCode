@@ -11,9 +11,9 @@ namespace AdventofCode2020
     {
         static async Task Main(string[] args)
         {
-            String[] input = await File.ReadAllLinesAsync(@"Inputs\InputDay13.txt");
+            String[] input = await File.ReadAllLinesAsync(@"Inputs\InputDay14.txt");
 
-            UInt64 result = new Day13().Process(input);
+            UInt64 result = new Day14().Process(input);
 
         }
 
