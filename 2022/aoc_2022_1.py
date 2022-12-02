@@ -2,6 +2,7 @@
 
 import pathlib
 import sys
+from heapq import nlargest
 
 def parse(puzzle_input):
     """Parse input."""
@@ -26,9 +27,8 @@ def part1(data):
 
 def part2(data):
     """Solve part 2."""
-    sums = [sum(x) for x in data]
-    sums.sort(reverse=True)
-    return sum(sums[0:3])
+    total = sum(nlargest(3, (sum(x) for x in data)))
+    return total
 
 def solve(puzzle_input):
     """Solve the puzzle for the given input."""
