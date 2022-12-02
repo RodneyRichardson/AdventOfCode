@@ -30,7 +30,7 @@ part_2_strategy = {
 
 def parse(puzzle_input):
     """Parse input."""
-    data = [line.strip().split(' ') for line in puzzle_input if len(line) > 0]
+    data = [line.strip().split(' ') for line in puzzle_input.split('\n')]
     return data
 
 def part1(data):
@@ -64,6 +64,6 @@ if __name__ == "__main__":
 
     for path in paths:
         print(f"{path}:")
-        puzzle_input = pathlib.Path(path).open().readlines()
+        puzzle_input = pathlib.Path(path).read_text().strip()
         solutions = solve(puzzle_input)
         print("\n".join(str(solution) for solution in solutions))

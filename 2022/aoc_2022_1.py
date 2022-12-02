@@ -6,18 +6,7 @@ from heapq import nlargest
 
 def parse(puzzle_input):
     """Parse input."""
-    values = []
-    current_value = []
-    for line in [x.strip() for x in puzzle_input]:
-        if len(line) > 0:
-            current_value.append(int(line))
-        elif len(current_value) > 0:
-            values.append(current_value)
-            current_value = []
-
-    if len(current_value) > 0:
-            values.append(current_value)
-
+    values = [[int(x) for x in elf.strip().split("\n")] for elf in puzzle_input.split('\n\n')]
     return values        
 
 def part1(data):
@@ -50,6 +39,6 @@ if __name__ == "__main__":
     for path in paths:
         print(f"{path}:")
 #        puzzle_input = pathlib.Path(path).read_text().strip()
-        puzzle_input = pathlib.Path(path).open().readlines()
+        puzzle_input = pathlib.Path(path).read_text()
         solutions = solve(puzzle_input)
         print("\n".join(str(solution) for solution in solutions))
