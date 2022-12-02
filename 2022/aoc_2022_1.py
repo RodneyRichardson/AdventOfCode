@@ -21,7 +21,7 @@ def parse(puzzle_input):
 
 def part1(data):
     """Solve part 1."""
-    max_value = max([sum(values) for values in data])
+    max_value = max(sum(values) for values in data)
     return max_value
 
 def part2(data):

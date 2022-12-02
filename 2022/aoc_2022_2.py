@@ -35,7 +35,7 @@ def parse(puzzle_input):
 
 def part1(data):
     """Solve part 1."""
-    total = sum([scores[''.join(game)] for game in data])
+    total = sum(scores[''.join(game)] for game in data)
     return total
 
 def part2(data):
