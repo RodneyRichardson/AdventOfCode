@@ -23,9 +23,10 @@ def solve(puzzle_input):
 if __name__ == "__main__":
     day = 1
 
+    inputs_path = pathlib.Path(__file__).parent / 'Inputs' 
     paths = [ 
-        f'C:\\working\\github\\RodneyRichardson\\AdventOfCode\\2022\\Inputs\\day{day}example1.txt',
-        f'C:\\working\\github\\RodneyRichardson\\AdventOfCode\\2022\\Inputs\\day{day}input.txt',
+        inputs_path / f'day{day}example.txt',
+        inputs_path / f'day{day}input.txt'
     ]
 
     for path in paths:
