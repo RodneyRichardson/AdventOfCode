@@ -31,6 +31,6 @@ if __name__ == "__main__":
 
     for path in paths:
         print(f"{path}:")
-        puzzle_input = pathlib.Path(path).open().readlines()
+        puzzle_input = pathlib.Path(path).read_text()
         solutions = solve(puzzle_input)
         print("\n".join(str(solution) for solution in solutions))
