@@ -10,68 +10,53 @@ def parse(puzzle_input):
     data = [[int(x) for x in list(line.strip())] for line in puzzle_input.split('\n') if len(line) > 0]
     return data
 
+def can_be_seen(tree_height, views):
+    seen = any(tree_height > max(view) for view in views)
+    return seen
+
 def part1(data):
     """Solve part 1."""
-    left = deepcopy(data)
-    map = left
-    for row in range(len(data)):
-        map[row][0] = True
-        for col in range(len(data[row]) - 1):
-            map[row][col + 1] = data[row][col+1] > max(data[row][:col+1])
-
-    right = deepcopy(data)
-    map = right
-    for row in range(len(data)):
-        map[row][len(data[row]) - 1] = True
-        for col in range(len(data[row]) - 1, 0, -1):
-            map[row][col - 1] = data[row][col-1] > max(data[row][col:])
-
-    top = deepcopy(data)
-    map = top
-    for col in range(len(data[0])):
-        map[0][col] = True
-        for row in range(len(data) - 1):
-            map[row+1][col] = data[row+1][col] > max((data[i][col] for i in range(0, row + 1)))
-
-    bottom = deepcopy(data)
-    map = bottom
-    for col in range(len(data[0])):
-        map[len(data) - 1][col] = True
-        for row in range(len(data) - 1, 0, -1):
-            map[row-1][col] = data[row-1][col] > max((data[i][col] for i in range(row, len(data))))
-
-    # Combine
-    count = 0
+    seen = deepcopy(data)
     for row in range(len(data)):
         for col in range(len(data[0])):
-            seen = left[row][col] or right[row][col] or top[row][col] or bottom[row][col]
-            if seen:
-                count += 1
+            if row == 0 or col == 0 or row == (len(data) - 1) or col == (len(data[0]) - 1):
+                seen[row][col] = True
+            else:
+                seen[row][col] = can_be_seen(data[row][col], [
+                    list(reversed(data[row][:col])),
+                    data[row][col+1:],
+                    list(reversed([data[i][col] for i in range(0, row)])),
+                    [data[i][col] for i in range(row+1, len(data))]
+                ]
+                )
+    # count all the "True" values
+    count = sum(1 for sub in seen for j in sub if j)
     return count
 
 def calculate_score(data, tree_row, tree_col):
-    tree = data[tree_row][tree_col]
+    tree_height = data[tree_row][tree_col]
 
     # down 
     down = 0
     for row in range(tree_row + 1, len(data)):
         col = tree_col
         down += 1
-        if (data[row][col] >= tree):
+        if (data[row][col] >= tree_height):
             break
+
     # up
     up = 0
     for row in range(tree_row - 1, -1, -1):
         col = tree_col
         up += 1
-        if (data[row][col] >= tree):
+        if (data[row][col] >= tree_height):
             break
     # right
     right = 0
     for col in range(tree_col + 1, len(data[0])):
         row = tree_row
         right += 1
-        if (data[row][col] >= tree):
+        if (data[row][col] >= tree_height):
             break
 
     # left
@@ -79,22 +64,37 @@ def calculate_score(data, tree_row, tree_col):
     for col in range(tree_col - 1, -1, -1):
         row = tree_row
         left += 1
-        if (data[row][col] >= tree):
+        if (data[row][col] >= tree_height):
             break
 
     return left * right * up * down
 
+def calculate_score2(tree_height, views):
+    score = 1 
+    for view in views:
+        score = score * (next((index for index, height in enumerate(view) if height >= tree_height), len(view) - 1) + 1)
+    return score
+
 def part2(data):
     """Solve part 2."""
-    score = deepcopy(data)
+    #score = deepcopy(data)
+    score2 = deepcopy(data)
     max_score = 0
     for row in range(len(data)):
         for col in range(len(data[0])):
             if row == 0 or col == 0 or row == (len(data) - 1) or col == (len(data[0]) - 1):
-                score[row][col] = 0
+                #score[row][col] = 0
+                score2[row][col] = 0
             else:
-                score[row][col] = calculate_score(data, row, col)
-                max_score = max(max_score, score[row][col])
+                #score[row][col] = calculate_score(data, row, col)
+                score2[row][col] = calculate_score2(data[row][col], [
+                    list(reversed(data[row][:col])),
+                    data[row][col+1:],
+                    list(reversed([data[i][col] for i in range(0, row)])),
+                    [data[i][col] for i in range(row+1, len(data))]
+                ]
+                )
+                max_score = max(max_score, score2[row][col])
     return max_score
 
 def solve(puzzle_input):
